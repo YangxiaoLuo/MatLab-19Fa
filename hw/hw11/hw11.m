@@ -32,9 +32,21 @@ f_min2 = f(x_min2);
 %% Q3
 syms x
 f = @(x)sin(x(1))+exp(x(2))+exp(x(3));
-x_min = fmincon(f,[1 0 0],[],[],[],[],[],[],@con);
-
-function [c,ceq]=con(x)
-ceq = x(1)^2+x(2)^2+x(3)^2 -1;
+x_min = fmincon(f,[1 0 0],[],[],[],[],[],[],@Q3con);
+%% Q4
+%(1)
+x = fminunc(@Q4func, zeros(5,1));
+%% utility
+function [c,ceq]=Q3con(x)
+ceq = x(1)^2+x(2)^2+x(3)^2-1;
 c = [];
+end
+
+function y=Q4func(x)
+rng default
+A = rand(5);
+B = rand(5);
+b = rand(5,1);
+lambda = 0.1;
+y = (norm(A*x-b,2)^2)/2+lambda*norm(B*x,1);
 end
